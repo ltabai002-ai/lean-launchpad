@@ -23,6 +23,7 @@ import {
 import heroImg from "../assets/infield-hero.jpg";
 import siteBandImg from "../assets/infield-site-band.jpg";
 import finalCtaImg from "../assets/infield-final-cta.jpg";
+import logoImg from "../assets/logo.png";
 
 const WA_NUMBER = "919999999999"; // TODO: replace with INFIELD's real WhatsApp number
 
@@ -66,12 +67,7 @@ function Nav() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href="#top" className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <HardHat className="h-5 w-5 text-primary-foreground" />
-          </span>
-          <span className="font-display text-xl font-extrabold tracking-tight">
-            INFIELD
-          </span>
+          <img src={logoImg} alt="INFIELD Logo" className="h-10 w-auto object-contain" />
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
@@ -1030,10 +1026,7 @@ function Footer() {
     <footer className="border-t border-border py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:px-6 md:flex-row">
         <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary">
-            <HardHat className="h-4 w-4 text-primary-foreground" />
-          </span>
-          <span className="font-display text-lg font-extrabold">INFIELD</span>
+          <img src={logoImg} alt="INFIELD Logo" className="h-10 w-auto object-contain" />
         </div>
         <p className="text-sm text-muted-foreground">
           Workforce management for construction, service, and field teams.
