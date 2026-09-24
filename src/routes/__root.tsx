@@ -77,18 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "INFIELD — Stop Proxy Attendance & Track Your Construction Workforce Live" },
+      { title: "Infield7 — Stop Proxy Attendance & Track Your Construction Workforce Live" },
       {
         name: "description",
         content:
-          "Know who's on site, who left, and pay exact salaries automatically. INFIELD is the workforce management app for construction companies. Get your free demo.",
+          "Know who's on site, who left, and pay exact salaries automatically. Infield7 is the workforce management app for construction companies. Get your free demo.",
       },
-      { name: "author", content: "INFIELD" },
-      { property: "og:title", content: "INFIELD — Stop Proxy Attendance & Track Your Construction Workforce Live" },
+      { name: "author", content: "Infield7" },
+      { property: "og:title", content: "Infield7 — Stop Proxy Attendance & Track Your Construction Workforce Live" },
       {
         property: "og:description",
         content:
-          "Know who's on site, who left, and pay exact salaries automatically. INFIELD is the workforce management app for construction companies. Get your free demo.",
+          "Know who's on site, who left, and pay exact salaries automatically. Infield7 is the workforce management app for construction companies. Get your free demo.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

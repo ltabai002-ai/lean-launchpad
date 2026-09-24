@@ -30,17 +30,17 @@ const WA_NUMBER = "919999999999"; // TODO: replace with INFIELD's real WhatsApp 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "INFIELD — Stop Proxy Attendance & Track Your Construction Workforce Live" },
+      { title: "Infield7 — Stop Proxy Attendance & Track Your Construction Workforce Live" },
       {
         name: "description",
         content:
-          "Know who's on site, who left, and pay exact salaries automatically. INFIELD is the workforce management app for construction companies. Get your free demo.",
+          "Know who's on site, who left, and pay exact salaries automatically. Infield7 is the workforce management app for construction companies. Get your free demo.",
       },
-      { property: "og:title", content: "INFIELD — Stop Proxy Attendance & Track Your Construction Workforce Live" },
+      { property: "og:title", content: "Infield7 — Stop Proxy Attendance & Track Your Construction Workforce Live" },
       {
         property: "og:description",
         content:
-          "Know who's on site, who left, and pay exact salaries automatically. INFIELD is the workforce management app for construction companies. Get your free demo.",
+          "Know who's on site, who left, and pay exact salaries automatically. Infield7 is the workforce management app for construction companies. Get your free demo.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -67,7 +67,7 @@ function Nav() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href="#top" className="flex items-center gap-2">
-          <img src={logoImg} alt="INFIELD Logo" className="h-10 w-auto object-contain" />
+          <img src={logoImg} alt="Infield7 Logo" className="h-10 w-auto object-contain" />
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
@@ -142,7 +142,7 @@ function Hero() {
       <div className="absolute inset-0 z-0">
         <img
           src={heroImg}
-          alt="Construction site with workers tracked live by INFIELD"
+          alt="Construction site with workers tracked live by Infield7"
           className="h-full w-full object-cover object-center md:object-right"
           loading="eager"
         />
@@ -160,7 +160,7 @@ function Hero() {
               <span className="text-[#ffcc00]">Right now.</span>
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-white/90">
-              INFIELD is a mobile app that shows your workers' attendance and location on every site — live.
+              Infield7 is a mobile app that shows your workers' attendance and location on every site — live.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
@@ -302,7 +302,7 @@ function UpAndRunning() {
         </h2>
         <p className="mt-3 max-w-2xl text-muted-foreground text-center md:text-left">
           No hardware to install. No training headaches. If your supervisor can
-          use WhatsApp, they can use INFIELD.
+          use WhatsApp, they can use Infield7.
         </p>
         <div className="mt-12 grid gap-6 sm:grid-cols-3">
           {steps.map((s) => (
@@ -354,7 +354,7 @@ function NewHowItWorks() {
       ),
     },
     {
-      title: "INFIELD verifies location inside site radius",
+      title: "Infield7 verifies location inside site radius",
       app: "Automatic",
       mockup: (
         <div className="relative flex h-full w-full flex-col bg-[#e8f1f5] items-center justify-center overflow-hidden">
@@ -658,7 +658,7 @@ function Features() {
           Built for sites, not offices
         </h2>
         <p className="mt-3 max-w-2xl text-base md:text-lg text-muted-foreground">
-          Dust, heat, patchy network, shared phones — INFIELD is designed for
+          Dust, heat, patchy network, shared phones — Infield7 is designed for
           how construction actually works in India.
         </p>
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -787,7 +787,7 @@ function Calculator() {
               Estimate math: Workers × (Wage ÷ 480 min) × Time lost × 26 days
             </p>
             <p className="text-sm leading-relaxed text-steel-foreground/70">
-              That's money walking out of your gate every single month. INFIELD
+              That's money walking out of your gate every single month. Infield7
               typically pays for itself within the first salary cycle.
             </p>
             <a
@@ -829,7 +829,7 @@ function BeforeAfter() {
     <section className="bg-secondary/60 py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="font-display text-3xl font-extrabold sm:text-4xl text-center">
-          Life before and after INFIELD
+          Life before and after Infield7
         </h2>
         <div className="mt-12 space-y-4">
           <div className="hidden md:grid md:grid-cols-2 gap-4 px-4 text-sm font-bold uppercase tracking-wide text-muted-foreground">
@@ -863,15 +863,15 @@ const faqs = [
   },
   {
     q: "Does it work with poor network on site?",
-    a: "Yes. INFIELD works offline. Attendance is captured on the phone and syncs automatically when the network returns. No data is ever lost.",
+    a: "Yes. Infield7 works offline. Attendance is captured on the phone and syncs automatically when the network returns. No data is ever lost.",
   },
   {
     q: "Is it available in Hindi?",
-    a: "[CONFIRM] Yes, INFIELD is fully translated into Hindi and supports multiple regional languages for workers.",
+    a: "[CONFIRM] Yes, Infield7 is fully translated into Hindi and supports multiple regional languages for workers.",
   },
   {
     q: "Will my workers accept being tracked?",
-    a: "[CONFIRM] INFIELD tracks location strictly during work hours and on the site premises. We emphasize privacy: 'Tracks Work Time. Not Their Personal Life.'",
+    a: "[CONFIRM] Infield7 tracks location strictly during work hours and on the site premises. We emphasize privacy: 'Tracks Work Time. Not Their Personal Life.'",
   },
   {
     q: "How much does it cost?",
@@ -879,7 +879,7 @@ const faqs = [
   },
   {
     q: "Does it drain battery or data?",
-    a: "[CONFIRM] INFIELD is optimized to run efficiently in the background, consuming minimal battery and data, usually less than a few MBs a day.",
+    a: "[CONFIRM] Infield7 is optimized to run efficiently in the background, consuming minimal battery and data, usually less than a few MBs a day.",
   },
 ];
 
@@ -928,7 +928,7 @@ function DemoForm() {
 
   function submit(e: FormEvent) {
     e.preventDefault();
-    const msg = `Hi INFIELD! I'd like a free demo.\n\nName: ${name}\nCompany: ${company}\nPhone: ${phone}\nWorkers: ${workers || "Not sure yet"}`;
+    const msg = `Hi Infield7! I'd like a free demo.\n\nName: ${name}\nCompany: ${company}\nPhone: ${phone}\nWorkers: ${workers || "Not sure yet"}`;
     window.open(waLink(msg), "_blank");
   }
 
@@ -948,11 +948,11 @@ function DemoForm() {
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center">
         <div className="text-steel-foreground">
           <h2 className="font-display text-3xl font-extrabold sm:text-4xl">
-            Book a 30-minute demo and see INFIELD on your own site.
+            Book a 30-minute demo and see Infield7 on your own site.
           </h2>
           <p className="mt-4 max-w-md text-lg text-steel-foreground/80">
             Fill this in and we'll WhatsApp you to schedule your free demo.
-            We'll show INFIELD running on a real site, with your questions
+            We'll show Infield7 running on a real site, with your questions
             answered live.
           </p>
           <ul className="mt-6 space-y-3 text-steel-foreground/80">
@@ -1026,7 +1026,7 @@ function Footer() {
     <footer className="border-t border-border py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:px-6 md:flex-row">
         <div className="flex items-center gap-2">
-          <img src={logoImg} alt="INFIELD Logo" className="h-10 w-auto object-contain" />
+          <img src={logoImg} alt="Infield7 Logo" className="h-10 w-auto object-contain" />
         </div>
         <p className="text-sm text-muted-foreground">
           Workforce management for construction, service, and field teams.
@@ -1038,7 +1038,7 @@ function Footer() {
         </div>
       </div>
       <p className="mt-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} INFIELD. All rights reserved.
+        © {new Date().getFullYear()} Infield7. All rights reserved.
       </p>
     </footer>
   );
