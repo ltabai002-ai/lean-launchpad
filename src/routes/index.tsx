@@ -1085,7 +1085,7 @@ function OnboardingFlow({ onComplete }: { onComplete: () => void }) {
       // Step 4: Submit to Google Sheet
       setIsSubmitting(true);
       try {
-        const scriptUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
+        const scriptUrl = import.meta.env.VITE_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbwKEdxa2ivuvXrqAlbor9ghU0BYH51VIeLmSHzjLJuvnPhIpRSjcrJmllIuPx6LKI4-HQ/exec";
         
         if (scriptUrl) {
           const payload = {
