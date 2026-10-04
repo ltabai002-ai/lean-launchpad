@@ -921,19 +921,54 @@ function FAQ() {
 /* -------------------------------- DEMO FORM ------------------------------- */
 
 function DemoForm() {
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
-  const [phone, setPhone] = useState("");
-  const [workers, setWorkers] = useState("");
+  const [role, setRole] = useState("");
+  const [staffCount, setStaffCount] = useState("");
+  const [challenge, setChallenge] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    businessName: "",
+    location: "",
+    phone: "",
+    date: "",
+    time: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  function submit(e: FormEvent) {
+  async function submit(e: FormEvent) {
     e.preventDefault();
-    const msg = `Hi Infield7! I'd like a free demo.\n\nName: ${name}\nCompany: ${company}\nPhone: ${phone}\nWorkers: ${workers || "Not sure yet"}`;
-    window.open(waLink(msg), "_blank");
+    setIsSubmitting(true);
+    try {
+      const scriptUrl = import.meta.env.VITE_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbwKEdxa2ivuvXrqAlbor9ghU0BYH51VIeLmSHzjLJuvnPhIpRSjcrJmllIuPx6LKI4-HQ/exec";
+      if (scriptUrl) {
+        const payload = {
+          role,
+          staffCount,
+          challenge,
+          ...formData,
+          timestamp: new Date().toISOString(),
+        };
+
+        await fetch(scriptUrl, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body: JSON.stringify(payload),
+        });
+      }
+    } catch (err) {
+      console.error("Failed to submit lead from website form:", err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   }
 
   const inputCls =
-    "w-full rounded-lg border border-input bg-background px-4 py-3 text-base outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20";
+    "w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20";
 
   return (
     <section id="demo" className="relative overflow-hidden py-16 md:py-24">
@@ -951,7 +986,7 @@ function DemoForm() {
             Book a 30-minute demo and see Infield7 on your own site.
           </h2>
           <p className="mt-4 max-w-md text-lg text-steel-foreground/80">
-            Fill this in and we'll WhatsApp you to schedule your free demo.
+            Fill this in and we'll reach out to schedule your free demo.
             We'll show Infield7 running on a real site, with your questions
             answered live.
           </p>
@@ -972,47 +1007,143 @@ function DemoForm() {
           onSubmit={submit}
           className="rounded-2xl border border-border bg-card p-6 shadow-2xl sm:p-8"
         >
-          <h3 className="font-display text-xl font-bold">Get your free demo</h3>
-          <div className="mt-5 space-y-4">
-            <input
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your name"
-              className={inputCls}
-            />
-            <input
-              required
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              placeholder="Company name"
-              className={inputCls}
-            />
-            <input
-              required
-              type="tel"
-              pattern="[0-9+ -]{10,15}"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="WhatsApp number"
-              className={inputCls}
-            />
-            <input
-              value={workers}
-              onChange={(e) => setWorkers(e.target.value)}
-              placeholder="How many workers? (optional)"
-              className={inputCls}
-            />
-            <button
-              type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.02]"
-            >
-              <MessageCircle className="h-5 w-5" /> Send on WhatsApp
-            </button>
-            <p className="text-center text-xs text-muted-foreground">
-              We'll reply on WhatsApp within a few hours, usually much faster.
-            </p>
-          </div>
+          <h3 className="font-display text-xl font-bold mb-4">Book an appointment</h3>
+          {submitted ? (
+            <div className="py-8 text-center animate-in fade-in">
+              <CheckCircle2 className="mx-auto h-12 w-12 text-green-500 mb-3" />
+              <h4 className="font-display text-lg font-bold text-foreground">Appointment Requested!</h4>
+              <p className="mt-2 text-sm text-muted-foreground">Your details have been sent. Our team will contact you shortly.</p>
+              <button
+                type="button"
+                onClick={() => setSubmitted(false)}
+                className="mt-6 text-xs font-semibold text-primary underline"
+              >
+                Submit another response
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {/* Question 1: Role */}
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-muted-foreground">What is your role?</label>
+                <select
+                  required
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className={inputCls}
+                >
+                  <option value="" disabled>Select your role</option>
+                  <option value="Contractor / Owner">Contractor / Owner</option>
+                  <option value="Project Manager">Project Manager</option>
+                  <option value="Site Supervisor">Site Supervisor</option>
+                  <option value="HR / Admin">HR / Admin</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {/* Question 2: Staff Count */}
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-muted-foreground">How many workers do you manage?</label>
+                <select
+                  required
+                  value={staffCount}
+                  onChange={(e) => setStaffCount(e.target.value)}
+                  className={inputCls}
+                >
+                  <option value="" disabled>Select worker count</option>
+                  <option value="1 - 50">1 - 50</option>
+                  <option value="51 - 200">51 - 200</option>
+                  <option value="200 - 500">200 - 500</option>
+                  <option value="500+">500+</option>
+                </select>
+              </div>
+
+              {/* Question 3: Challenge */}
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-muted-foreground">What is your biggest current challenge?</label>
+                <select
+                  required
+                  value={challenge}
+                  onChange={(e) => setChallenge(e.target.value)}
+                  className={inputCls}
+                >
+                  <option value="" disabled>Select biggest challenge</option>
+                  <option value="Proxy attendance / Buddy punching">Proxy attendance / Buddy punching</option>
+                  <option value="Calculating exact work hours and overtime">Calculating exact work hours and overtime</option>
+                  <option value="Workers leaving the site early">Workers leaving the site early</option>
+                  <option value="Managing workers across multiple sites">Managing workers across multiple sites</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {/* Question 4: Contact & Appointment details */}
+              <input
+                required
+                type="text"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className={inputCls}
+              />
+              <input
+                required
+                type="text"
+                placeholder="Business / Company Name"
+                value={formData.businessName}
+                onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+                className={inputCls}
+              />
+              <input
+                required
+                type="text"
+                placeholder="Location / City"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                className={inputCls}
+              />
+              <input
+                required
+                type="tel"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className={inputCls}
+              />
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  required
+                  type="date"
+                  placeholder="Preferred Date"
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  className={inputCls}
+                />
+                <input
+                  required
+                  type="time"
+                  placeholder="Preferred Time"
+                  value={formData.time}
+                  onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                  className={inputCls}
+                />
+              </div>
+              <textarea
+                rows={2}
+                placeholder="Any additional message? (optional)"
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className={`${inputCls} resize-none`}
+              />
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.02] disabled:opacity-50"
+              >
+                {isSubmitting ? "Submitting..." : "Book an appointment"}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </section>
