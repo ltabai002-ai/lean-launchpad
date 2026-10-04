@@ -1059,11 +1059,250 @@ function StickyCTA() {
   );
 }
 
+function OnboardingFlow({ onComplete }: { onComplete: () => void }) {
+  const [step, setStep] = useState(1);
+  const [role, setRole] = useState("");
+  const [staffCount, setStaffCount] = useState("");
+  const [challenge, setChallenge] = useState("");
+  
+  // Form fields for Step 4
+  const [formData, setFormData] = useState({
+    name: "",
+    businessName: "",
+    location: "",
+    phone: "",
+    date: "",
+    time: "",
+    message: ""
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleNext = async () => {
+    if (step < 4) {
+      setStep(step + 1);
+    } else {
+      // Step 4: Submit to Google Sheet
+      setIsSubmitting(true);
+      try {
+        const scriptUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
+        
+        if (scriptUrl) {
+          const payload = {
+            role,
+            staffCount,
+            challenge,
+            ...formData,
+            timestamp: new Date().toISOString(),
+          };
+
+          await fetch(scriptUrl, {
+            method: "POST",
+            mode: "no-cors", // Required for Google Apps Script unless CORS is handled
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+            body: JSON.stringify(payload),
+          });
+        } else {
+          console.warn("No VITE_GOOGLE_SHEET_URL found in .env. Skipping Google Sheet submission.");
+        }
+      } catch (err) {
+        console.error("Failed to submit lead:", err);
+      } finally {
+        setIsSubmitting(false);
+        onComplete();
+      }
+    }
+  };
+
+  const inputCls = "w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20";
+
+  return (
+    <div className="fixed inset-0 z-[100] flex flex-col bg-background p-6 overflow-y-auto sm:p-10">
+      {/* Top Header: Logo on Left, Skip Button on Right */}
+      <div className="absolute top-6 left-6 md:top-8 md:left-8">
+        <img src={logoImg} alt="Infield7 Logo" className="h-8 md:h-10 w-auto object-contain" />
+      </div>
+      <div className="absolute top-6 right-6 md:top-8 md:right-8">
+        <button 
+          onClick={onComplete}
+          className="rounded-full bg-secondary/80 px-4 py-1.5 text-xs font-bold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground shadow-sm"
+        >
+          Skip to website
+        </button>
+      </div>
+
+      <div className="mx-auto w-full max-w-md flex-1 flex flex-col pt-16 md:pt-12">
+        <div className="mb-6 h-2 w-full rounded-full bg-secondary">
+          <div 
+            className="h-full rounded-full bg-primary transition-all duration-300 ease-in-out"
+            style={{ width: `${(step / 4) * 100}%` }}
+          />
+        </div>
+
+        {step === 1 && (
+          <div className="flex-1 animate-in fade-in slide-in-from-right-4">
+            <h2 className="mb-6 font-display text-2xl font-bold">What is your role?</h2>
+            <div className="flex flex-col gap-3">
+              {["Contractor / Owner", "Project Manager", "Site Supervisor", "HR / Admin", "Other"].map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setRole(r)}
+                  className={`rounded-xl border p-4 text-left font-medium transition-all ${role === r ? "border-primary bg-primary/10 text-primary" : "border-border bg-card hover:border-primary/50"}`}
+                >
+                  {r}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div className="flex-1 animate-in fade-in slide-in-from-right-4">
+            <h2 className="mb-6 font-display text-2xl font-bold">How many workers do you manage?</h2>
+            <div className="flex flex-col gap-3">
+              {["1 - 50", "51 - 200", "200 - 500", "500+"].map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setStaffCount(c)}
+                  className={`rounded-xl border p-4 text-left font-medium transition-all ${staffCount === c ? "border-primary bg-primary/10 text-primary" : "border-border bg-card hover:border-primary/50"}`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="flex-1 animate-in fade-in slide-in-from-right-4">
+            <h2 className="mb-6 font-display text-2xl font-bold">What is your biggest current challenge?</h2>
+            <div className="flex flex-col gap-3">
+              {[
+                "Proxy attendance / Buddy punching",
+                "Calculating exact work hours and overtime",
+                "Workers leaving the site early",
+                "Managing workers across multiple sites",
+                "Other"
+              ].map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setChallenge(c)}
+                  className={`rounded-xl border p-4 text-left font-medium transition-all ${challenge === c ? "border-primary bg-primary/10 text-primary" : "border-border bg-card hover:border-primary/50"}`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === 4 && (
+          <div className="flex-1 animate-in fade-in slide-in-from-right-4 pb-12">
+            <h2 className="mb-2 font-display text-2xl font-bold">Book an appointment</h2>
+            <p className="mb-6 text-sm text-muted-foreground">Leave your details and we'll reach out to schedule a demo.</p>
+            <div className="flex flex-col gap-4">
+              <input
+                required
+                type="text"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className={inputCls}
+              />
+              <input
+                required
+                type="text"
+                placeholder="Business / Company Name"
+                value={formData.businessName}
+                onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+                className={inputCls}
+              />
+              <input
+                required
+                type="text"
+                placeholder="Location / City"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                className={inputCls}
+              />
+              <input
+                required
+                type="tel"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className={inputCls}
+              />
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  required
+                  type="date"
+                  placeholder="Preferred Date"
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  className={inputCls}
+                />
+                <input
+                  required
+                  type="time"
+                  placeholder="Preferred Time"
+                  value={formData.time}
+                  onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                  className={inputCls}
+                />
+              </div>
+              <textarea
+                rows={3}
+                placeholder="Any additional message? (optional)"
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className={`${inputCls} resize-none`}
+              />
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8 flex gap-3 shrink-0">
+          {step > 1 && (
+            <button
+              onClick={() => setStep(step - 1)}
+              className="rounded-xl border border-input bg-background px-6 py-4 font-semibold text-foreground transition-colors hover:bg-accent"
+            >
+              Back
+            </button>
+          )}
+          <button
+            onClick={handleNext}
+            disabled={
+              isSubmitting ||
+              (step === 1 && !role) ||
+              (step === 2 && !staffCount) ||
+              (step === 3 && !challenge) ||
+              (step === 4 && (!formData.name || !formData.businessName || !formData.location || !formData.phone || !formData.date || !formData.time))
+            }
+            className="flex-1 rounded-xl bg-primary px-6 py-4 font-semibold text-primary-foreground disabled:opacity-50 transition-colors"
+          >
+            {isSubmitting ? "Submitting..." : step === 4 ? "Book an appointment" : "Continue"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ---------------------------------- PAGE ---------------------------------- */
 
 function Index() {
+  const [onboarded, setOnboarded] = useState(false);
+
+  if (!onboarded) {
+    return <OnboardingFlow onComplete={() => setOnboarded(true)} />;
+  }
+
   return (
-    <div className="min-h-screen pb-20 md:pb-0">
+    <div className="min-h-screen pb-20 md:pb-0 animate-in fade-in duration-500">
       <Nav />
       <main>
         <Hero />
