@@ -23,7 +23,7 @@ import {
 import heroImg from "../assets/infield-hero.jpg";
 import siteBandImg from "../assets/infield-site-band.jpg";
 import finalCtaImg from "../assets/infield-final-cta.jpg";
-import logoImg from "../assets/logo.png";
+const logoImg = "/constworkermgt.webp";
 
 const WA_NUMBER = "919999999999"; // TODO: replace with INFIELD's real WhatsApp number
 
@@ -1168,9 +1168,14 @@ function Footer() {
           <a href="#demo" className="hover:text-foreground">Demo</a>
         </div>
       </div>
-      <p className="mt-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Infield7. All rights reserved.
-      </p>
+      <div className="mt-6 flex flex-col items-center gap-2">
+        <p className="text-center text-xs text-muted-foreground">
+          © {new Date().getFullYear()} Infield7. All rights reserved.
+        </p>
+        <p className="text-center text-xs font-semibold text-muted-foreground">
+          Powered by Infield7
+        </p>
+      </div>
     </footer>
   );
 }
